@@ -1,0 +1,3 @@
+[submodule "adl_edge_iot"]
+	path = adl_edge_iot
+	url = https://github.com/tobymcclean/adl_edge_iot

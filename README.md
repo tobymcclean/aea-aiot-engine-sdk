@@ -1,0 +1,1 @@
+Repository provides a set of Python utility functions and classes for building ADLINK Edge SDK applications that are based around an AI inference engine.
