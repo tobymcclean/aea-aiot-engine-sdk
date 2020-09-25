@@ -1,0 +1,101 @@
+[
+    {
+        "name":"DetectionBox",
+        "context":"com.vision.data",
+        "qosProfile":"event",
+        "version":"v1.0",
+        "description":"Inference engine results for object detection model outputing bounding boxes",
+        "tags":[
+            {
+                "name":"engine_id",
+                "description":"Inference engine identifier",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"stream_id",
+                "description":"ID of the stream fed into the inference engine",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"frame_id",
+                "description":"ID of the input video frame fed to the inference engine",
+                "kind":"UINT32",
+                "unit":"NUM"
+            },
+            {
+                "name":"data",
+                "description":"List of Detection Box Data (the results)",
+                "kind":"NVP_SEQ",
+                "unit":"n/a",
+                "typedefinition": "DetectionBoxData"
+            }
+        ]
+    },
+    {
+        "typedefinition": "DetectionBoxData",
+        "tags": [
+            {
+                "name":"obj_id",
+                "description":"Detected object id",
+                "kind":"INT32",
+                "unit":"UUID"
+            },
+            {
+                "name":"obj_label",
+                "description":"Detected object proper name",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"class_id",
+                "description":"Detected object's classification type as raw id",
+                "kind":"INT32",
+                "unit":"UUID"
+            },
+            {
+                "name":"class_label",
+                "description":"Detected object's classification as proper name",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"x1",
+                "description":"Top Left X Coordinate (% from 0,0)",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            },
+            {
+                "name":"y1",
+                "description":"Top Left Y Coordinate (% from 0,0)",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            },
+            {
+                "name":"x2",
+                "description":"Bottom Right X Coordinate (% from 0,0)",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            },
+            {
+                "name":"y2",
+                "description":"Bottom Right Y Coordinate (% from 0,0)",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            },
+            {
+                "name":"probability",
+                "description":"Network confidence",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            },
+            {
+                "name":"meta",
+                "description":"Buffer for extra inference metadata",
+                "kind":"STRING",
+                "unit":"N/A"
+            }
+        ]
+    }
+]

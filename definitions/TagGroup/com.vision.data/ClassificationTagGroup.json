@@ -1,0 +1,65 @@
+[
+    {
+        "name":"Classification",
+        "context":"com.vision.data",
+        "qosProfile":"event",
+        "version":"v1.0",
+        "description":"Inference engine results for classification model",
+        "tags":[
+            {
+                "name":"engine_id",
+                "description":"Inference engine identifier",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"stream_id",
+                "description":"ID of the stream fed into the inference engine",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"frame_id",
+                "description":"ID of the input video frame fed to the inference engine",
+                "kind":"UINT32",
+                "unit":"NUM"
+            },
+            {
+                "name":"data",
+                "description":"List of Classification Data (the results)",
+                "kind":"NVP_SEQ",
+                "unit":"n/a",
+                "typedefinition": "ClassificationData"
+            }
+        ]
+    },
+    {
+        "typedefinition": "ClassificationData",
+        "tags": [
+            {
+                "name":"index",
+                "description":"Classification index",
+                "kind":"INT32",
+                "unit":"n/a"
+            },
+            {
+                "name":"output",
+                "description":"Output type - used when classification model has multiple types of labels for each output index",
+                "kind":"STRING",
+                "unit":"n/a"
+            },
+            {
+                "name":"label",
+                "description":"Classification label name",
+                "kind":"STRING",
+                "unit":"n/a"
+            },
+            {
+                "name":"probability",
+                "description":"Network confidence",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            }
+        ]
+    }
+]

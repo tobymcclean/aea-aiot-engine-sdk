@@ -1,0 +1,75 @@
+{
+    "name":"VideoFrame",
+    "context":"com.vision.data",
+    "qosProfile":"video",
+    "version":"v1.0",
+    "description":"Video frame sample",
+    "tags":[
+        {
+            "name":"stream_id",
+            "description":"Stream publisher ID",
+            "kind":"STRING",
+            "unit":"UUID"
+        },
+        {
+            "name":"frame_id",
+            "description":"Frame sample ID",
+            "kind":"UINT32",
+            "unit":"NUM"
+        },
+        {
+            "name":"timestamp",
+            "description":"Time of image capture event",
+            "kind":"INT64",
+            "unit":"time"
+        },
+        {
+            "name":"data",
+            "description":"Video frame data",
+            "kind":"TYPE_BYTE_SEQ",
+            "unit":"Frame data"
+        },
+        {
+            "name":"width",
+            "description":"Frame width",
+            "kind":"UINT32",
+            "unit":"Pixels"
+        },
+        {
+            "name":"height",
+            "description":"Frame height",
+            "kind":"UINT32",
+            "unit":"Pixels"
+        },
+        {
+            "name":"channels",
+            "description":"Channels",
+            "kind":"UINT32",
+            "unit":"Number of channels"
+        },
+        {
+            "name":"size",
+            "description":"Data size",
+            "kind":"UINT32",
+            "unit":"Size"
+        },
+        {
+            "name":"format",
+            "description":"Pixel format using OpenCV Definitions",
+            "kind":"STRING",
+            "unit":"PixelFormat"
+        },
+        {
+            "name":"compression",
+            "description":"Compression technology used for video frame",
+            "kind":"STRING",
+            "unit":"CompressionKind"
+        },
+        {
+            "name":"framerate",
+            "description":"Frame transmission frequency",
+            "kind":"FLOAT32",
+            "unit":"fps"
+        }
+    ]
+}

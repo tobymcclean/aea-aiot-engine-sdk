@@ -1,0 +1,101 @@
+[
+    {
+        "name":"Segmentation",
+        "context":"com.vision.data",
+        "qosProfile":"event",
+        "version":"v1.0",
+        "description":"Inference engine results for classification model",
+        "tags":[
+            {
+                "name":"engine_id",
+                "description":"Inference engine identifier",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"stream_id",
+                "description":"ID of the stream fed into the inference engine",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"frame_id",
+                "description":"ID of the input video frame fed to the inference engine",
+                "kind":"UINT32",
+                "unit":"NUM"
+            },
+            {
+                "name":"inference_id",
+                "description":"Segmentation mask instance in the result array",
+                "kind":"UINT32",
+                "unit":"NUM"
+            },
+            {
+                "name":"data",
+                "description":"List of Segmentation Data (the results)",
+                "kind":"NVP_SEQ",
+                "unit":"n/a",
+                "typedefinition": "SegmentationData"
+            }
+        ]
+    },
+    {
+        "typedefinition": "SegmentationData",
+        "tags": [
+            {
+                "name":"id",
+                "description":"Segmentation mask index/id",
+                "kind":"INT32",
+                "unit":"UUID"
+            },
+            {
+                "name":"width",
+                "description":"Segmentation mask frame width",
+                "kind":"INT32",
+                "unit":"pixels"
+            },
+            {
+                "name":"height",
+                "description":"Segmentation mask frame height",
+                "kind":"INT32",
+                "unit":"pixels"
+            },
+            {
+                "name":"size",
+                "description":"Segmentation mask payload size (bytes)",
+                "kind":"INT32",
+                "unit":"bytes"
+            },
+            {
+                "name":"channel",
+                "description":"Segmentation mask output channel",
+                "kind":"INT32",
+                "unit":"index"
+            },
+            {
+                "name":"color",
+                "description":"Segmentation mask color (#XXXXXX)",
+                "kind":"STRING",
+                "unit":"Color"
+            },
+            {
+                "name":"label",
+                "description":"Classification label name",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"probability",
+                "description":"Network confidence",
+                "kind":"FLOAT32",
+                "unit":"Percentage"
+            },
+            {
+                "name":"data",
+                "description":"Segmentation mask frame data",
+                "kind":"BYTE_SEQ",
+                "unit":"bytes"
+            }
+        ]
+    }
+]

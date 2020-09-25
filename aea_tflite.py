@@ -70,7 +70,7 @@ def build_inference_engine(model_file: str, labels_file: str):
     interpreter.allocate_tensors()
     _, input_height, input_width, _ = interpreter.get_input_details()[0]['shape']
 
-    def inference(flow_id: str, frame: Any) -> PyDetectionBox:
+    def inference(flow_id: str, frame: object) -> PyDetectionBox:
         """
         Returns a list of detection results, each a dictionary of object info
         """
