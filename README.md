@@ -17,6 +17,6 @@ def inference(flow_id: str, frame: object) -> PyDetectionBox:
 The `flow_id` parameter identifies the source context of the frame and allows for the application to process more that one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyDetectionBox objects will be made available to other ADLINK Edge applications through the `DetectionBox` tag group (think database table).
 
 | Engine | Reference integration |
-|________|_______________________|
+| --- | --- |
 |Tensorflow Lite | aea_tflite.py |
 
