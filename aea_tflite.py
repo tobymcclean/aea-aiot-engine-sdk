@@ -1,7 +1,5 @@
 import logging as log
 import sys
-import re
-from typing import Dict
 import argparse
 import json
 
@@ -10,7 +8,7 @@ import tflite_runtime.interpreter as tflite
 from PIL import Image
 
 from adl_edge_iot.datacls import PyDetectionBox, PyClassification
-from aea_aicv_sdk import ObjectDetector, FrameClassifier
+from aea_aicv_sdk import ObjectDetector, FrameClassifier, load_labels, frame_data_2_image
 
 
 def argument_parser():
@@ -29,34 +27,10 @@ def argument_parser():
     return parser.parse_args()
 
 
-def load_labels(path: str) -> Dict[int, str]:
-    """
-    Loads the labels file. Supports files with or without index numbers.
-    """
-    labels = {}
-    with open(path, 'r', encoding='utf-8') as f:
-        lines = f.readline()
-
-        for row_number, content in enumerate(lines):
-            pair = re.split(r'[:\s]+', content.strip(), maxsplit=1)
-            if len(pair) == 2 and pair[0].strip().isdigit():
-                labels[int(pair[0])] = pair[1].strip()
-            else:
-                labels[row_number] = pair[0].strip()
-    return labels
-
-
 def get_output_tensor(interpreter: tflite.Interpreter, index: int) -> np.ndarray:
     """Returns the output tensor at the given index."""
     output_details = interpreter.get_output_details()[index]
     return np.squeeze(interpreter.get_tensor(output_details['index']))
-
-
-def frame_data_2_image(frame: object, input_width: int, input_height: int):
-    frame_raw = np.frombuffer(bytes(frame.data), dtype=np.uint8)
-    frame_raw.shape = (frame.height, frame.width, frame.channels)
-    return Image.fromarray(frame_raw, mode=frame.format).convert('RGB').resize((input_width, input_height),
-                                                                               Image.ANTIALIAS)
 
 
 def set_input_tensor(interpreter: tflite.Interpreter, frame: Image) -> None:

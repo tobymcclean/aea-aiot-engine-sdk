@@ -1,7 +1,11 @@
 import logging as log
+import re
 import sys
 import traceback
-from typing import Callable, List, Tuple
+from typing import Callable, List, Tuple, Dict
+
+import numpy as np
+from PIL import Image
 
 from rx.subject import Subject
 
@@ -92,3 +96,31 @@ class FrameClassifier(__InferenceEngine):
 
     def _write_inference(self, obj: Tuple[str, PyClassification]) -> None:
         write_tag(self.thing, 'ClassificationData', obj[1].dr_data, flow=obj[0])
+
+
+def load_labels(path: str) -> Dict[int, str]:
+    """
+    Loads the labels file. Supports files with or without index numbers.
+    """
+    labels = {}
+    with open(path, 'r', encoding='utf-8') as f:
+        lines = f.readline()
+
+        for row_number, content in enumerate(lines):
+            pair = re.split(r'[:\s]+', content.strip(), maxsplit=1)
+            if len(pair) == 2 and pair[0].strip().isdigit():
+                labels[int(pair[0])] = pair[1].strip()
+            else:
+                labels[row_number] = pair[0].strip()
+    return labels
+
+def frame_data_2_np_array(frame:object):
+    frame_raw = np.frombuffer(bytes(frame.data), dtype=np.uint8)
+    frame_raw.shape = (frame.height, frame.width, frame.channels)
+    return frame_raw
+
+def frame_data_2_image(frame: object, input_width: int, input_height: int):
+    frame_raw = np.frombuffer(bytes(frame.data), dtype=np.uint8)
+    frame_raw.shape = (frame.height, frame.width, frame.channels)
+    return Image.fromarray(frame_raw, mode=frame.format).convert('RGB').resize((input_width, input_height),
+                                                                               Image.ANTIALIAS)

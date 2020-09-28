@@ -19,6 +19,7 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | Engine | Reference integration | Inference funtion |
 | ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_detection_engine |
+| [Tensorflow 2 Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) | aea_tf_object_detection_api.py | build_detection_engine |
 
 #### Building a new frame classifierer integration
 With the `aea_aicv_sdk.FrameClassifier` class the integration is as easy as providing a function that processes a frame/image and produces a `PyClassification` object that contains the top-K classifications for the frame along with their confidence levels. An example of the function signature
