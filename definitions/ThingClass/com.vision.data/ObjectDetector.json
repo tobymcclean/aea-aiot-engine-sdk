@@ -1,0 +1,18 @@
+{
+    "name": "ObjectDetector",
+    "context": "com.vision.data",
+    "version": "v1.0",
+    "description": "A thing that derives object detection boxes from video frames",
+    "inputs": [
+        {
+            "name": "VideoFrameData",
+            "tagGroupId": "VideoFrame:com.vision.data:v1.0"
+        }
+    ],
+    "outputs": [
+        {
+            "name": "DetectionBoxData",
+            "tagGroupId": "DepthDetectionBox:com.vision.data:v1.0"
+        }
+    ]
+}

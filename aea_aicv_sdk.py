@@ -1,15 +1,18 @@
 import logging as log
 import sys
 import traceback
-from typing import Callable, Any, Tuple
+from typing import Callable, List, Tuple
 
 from rx.subject import Subject
 
 from adlinktech.datariver import IotNvpDataAvailableListener, Dispatcher, FlowState
-from adlinktech.datariver import class_from_thing_input, class_from_thing_output
+from adlinktech.datariver import class_from_thing_input
 
+from adl_edge_iot.datacls import PyClassification
 from adl_edge_iot.datariver.things.edge_thing import EdgeThing
 from adl_edge_iot.datacls.PyDetectionBox import PyDetectionBox
+from adl_edge_iot.datariver.utils import write_tag
+
 
 class FrameListener(IotNvpDataAvailableListener):
     def __init__(self, subject, data_class):
@@ -28,25 +31,25 @@ class FrameListener(IotNvpDataAvailableListener):
                     traceback.print_exc(file=sys.stdout)
 
 
-class InferenceEngine(EdgeThing):
+class __InferenceEngine(EdgeThing):
     def __init__(self,
-                 properties_str : str,
-                 inference : Callable[[str, Any], PyDetectionBox]):
+                 properties_str: str,
+                 inference: Callable[[str, object], Tuple[str,object]],
+                 tag_groups: List[str],
+                 thing_cls: List[str]):
         super().__init__(properties_str=properties_str,
-                     tag_groups=['com.vision.data/DetectionBoxTagGroup', 'com.vision.data/VideoFrameTagGroup'],
-                     thing_cls=['com.vision.data/ObjectDetector'])
+                         tag_groups=tag_groups,
+                         thing_cls=thing_cls)
         self.__frame_data_class = class_from_thing_input(self.dr, self.thing, 'VideoFrameData')
         self.__frame_subject = Subject()
         self.__listener = FrameListener(self.__frame_subject, self.__frame_data_class)
         self.__inference_fn = inference
-        self.__frame_subject.map(lambda s : self.__inference_fn(s[0], s[1])).subscribe(self.__write_detection)
+        self.__frame_subject.map(lambda s: self.__inference_fn(s[0], s[1])).subscribe(self._write_inference)
 
-
-    def __write_detection(self, detection : PyDetectionBox):
+    def _write_inference(self, obj: object) -> None:
         pass
 
-
-    def run(self):
+    def run(self) -> None:
         """
         The main loop of the Thing, when it exits the lifecycle of the Thing is done.
         A listener is attached to the VideoFrame input and as the frames are received they a passed through
@@ -64,3 +67,28 @@ class InferenceEngine(EdgeThing):
             except:
                 continue
 
+
+class ObjectDetector(__InferenceEngine):
+    def __init__(self,
+                 properties_str: str,
+                 inference: Callable[[str, object], Tuple[str, PyDetectionBox]]):
+        super().__init__(properties_str=properties_str,
+                         inference=inference,
+                         tag_groups=['com.vision.data/DetectionBoxTagGroup', 'com.vision.data/VideoFrameTagGroup'],
+                         thing_cls=['com.vision.data/ObjectDetector'])
+
+    def _write_inference(self, obj: Tuple[str, PyDetectionBox]) -> None:
+        write_tag(self.thing, 'DetectionBoxData', obj[1].dr_data, flow=obj[0])
+
+
+class FrameClassifier(__InferenceEngine):
+    def __init__(self,
+                 properties_str: str,
+                 inference: Callable[[str, object], Tuple[str, PyClassification]]):
+        super().__init__(properties_str=properties_str,
+                         inference=inference,
+                         tag_groups=['com.vision.data/ClassificationBoxTagGroup', 'com.vision.data/VideoFrameTagGroup'],
+                         thing_cls=['com.vision.data/FrameClassifier'])
+
+    def _write_inference(self, obj: Tuple[str, PyClassification]) -> None:
+        write_tag(self.thing, 'ClassificationData', obj[1].dr_data, flow=obj[0])
