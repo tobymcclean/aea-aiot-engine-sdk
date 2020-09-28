@@ -17,7 +17,7 @@ def inference(flow_id: str, frame: object) -> Tuple[str, PyDetectionBox]:
 The `flow_id` parameter identifies the source context of the frame and allows for the application to process more that one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyDetectionBox objects will be made available to other ADLINK Edge applications through the `DetectionBox` tag group (think database table).
 
 | Engine | Reference integration | Inference funtion |
-|________|_______________________|___________________|
+| ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_detection_engine |
 
 #### Building a new frame classifierer integration
@@ -28,6 +28,6 @@ def inference(flow_id: str, frame: object) -> Tuple[str, PyClassification]:
 The `flow_id` parameter identifies the source context of the frame and allows for the application to process more that one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyClassification objects will be made available to other ADLINK Edge applications through the `Classification` tag group (think database table).
 
 | Engine | Reference integration | Inference funtion |
-|________|_______________________|___________________|
+| ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_classification_engine|
 
