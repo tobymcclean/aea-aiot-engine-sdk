@@ -5,10 +5,9 @@ import argparse
 import json
 
 import numpy as np
-from PIL import Image
 
 from adl_edge_iot.datacls import PyDetectionBox
-from aea_aicv_sdk import ObjectDetector, load_labels, frame_data_2_image, frame_data_2_np_array
+from aea_aicv_sdk import ObjectDetector, frame_data_2_np_array
 
 import tensorflow as tf
 from object_detection.utils import label_map_util, config_util
