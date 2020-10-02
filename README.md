@@ -32,4 +32,6 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | Engine | Reference integration | Inference funtion |
 | ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_classification_engine|
+|ONNX Runtime | aea_onnx_runtime.py | build_classification_engine|
+| [ONNX Runtime](https://github.com/microsoft/onnxruntime) | aea_onnx_runtime.py | build_classification_engine |
 
