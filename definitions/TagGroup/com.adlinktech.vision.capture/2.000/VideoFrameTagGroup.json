@@ -1,16 +1,10 @@
 {
     "name":"VideoFrame",
-    "context":"com.vision.data",
+    "context":"com.adlinktech.vision.capture",
     "qosProfile":"video",
-    "version":"v1.0",
-    "description":"Video frame sample",
+    "version":"2.000",
+    "description":"Video frame sample. The stream_id should be encapsulated in the flowId",
     "tags":[
-        {
-            "name":"stream_id",
-            "description":"Stream publisher ID",
-            "kind":"STRING",
-            "unit":"UUID"
-        },
         {
             "name":"frame_id",
             "description":"Frame sample ID",
@@ -24,9 +18,9 @@
             "unit":"time"
         },
         {
-            "name":"data",
+            "name":"video_data",
             "description":"Video frame data",
-            "kind":"TYPE_BYTE_SEQ",
+            "kind":"BYTE_SEQ",
             "unit":"Frame data"
         },
         {
@@ -50,7 +44,7 @@
         {
             "name":"size",
             "description":"Data size",
-            "kind":"UINT32",
+            "kind":"UINT64",
             "unit":"Size"
         },
         {

@@ -54,10 +54,10 @@ def build_detection_engine(config_file : str, data_file : str, weights : str, th
         image = frame_data_2_bytes(frame, width, height)
         darknet.copy_image_from_bytes(darknet_image, image)
         detections = darknet.detect_image(network, class_names, darknet_image, thresh=thresh)
-        result = PyDetectionBox(stream_id=frame.stream_id, frame_id=frame.frame_id)
+        result = PyDetectionBox(frame_id=frame.frame_id, engine_id='darknet')
         for label, confidence, bbox in detections:
             left, top, right, bottom = darknet.bbox2points(bbox)
-            result.add_box(0, '', labels_rev.get(label, ''), label, left, top, right, left, float(confidence), '')
+            result.add_box(category_id=labels_rev.get(label, ''), category_label=label, x1=left, y1=top, x2=right, y2=left, probability=float(confidence))
         darknet.free_image(darknet_image)
 
         return flow_id, result

@@ -78,8 +78,8 @@ class ObjectDetector(__InferenceEngine):
                  inference: Callable[[str, object], Tuple[str, PyDetectionBox]]):
         super().__init__(properties_str=properties_str,
                          inference=inference,
-                         tag_groups=['com.vision.data/DetectionBoxTagGroup', 'com.vision.data/VideoFrameTagGroup'],
-                         thing_cls=['com.vision.data/ObjectDetector'])
+                         tag_groups=['com.adlinktech.vision.inference/2.000/DetectionBoxTagGroup', 'com.adlinktech.vision.capture/2.000/VideoFrameTagGroup'],
+                         thing_cls=['com.adlinktech.vision/ObjectDetector'])
 
     def _write_inference(self, obj: Tuple[str, PyDetectionBox]) -> None:
         write_tag(self.thing, 'DetectionBoxData', obj[1].dr_data, flow=obj[0])
@@ -91,8 +91,8 @@ class FrameClassifier(__InferenceEngine):
                  inference: Callable[[str, object], Tuple[str, PyClassification]]):
         super().__init__(properties_str=properties_str,
                          inference=inference,
-                         tag_groups=['com.vision.data/ClassificationBoxTagGroup', 'com.vision.data/VideoFrameTagGroup'],
-                         thing_cls=['com.vision.data/FrameClassifier'])
+                         tag_groups=['com.adlinktech.vision.inference/2.000/ClassificationBoxTagGroup', 'com.adlinktech.vision.capture/2.000/VideoFrameTagGroup'],
+                         thing_cls=['com.adlinktech.vision/FrameClassifier'])
 
     def _write_inference(self, obj: Tuple[str, PyClassification]) -> None:
         write_tag(self.thing, 'ClassificationData', obj[1].dr_data, flow=obj[0])

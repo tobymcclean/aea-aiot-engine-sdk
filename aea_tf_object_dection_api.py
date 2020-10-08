@@ -67,14 +67,14 @@ def build_detection_engine(pipeline_config : str, model_dir: str, labels_file: s
         classes = detections['detection_classes'][0].numpy()
         scores = detections['dection_scores'][0].numpy()
 
-        result = PyDetectionBox(frame_id=frame.frame_id, stream_id=flow_id)
+        result = PyDetectionBox(frame_id=frame.frame_id, engine_id='tf-object-detection')
 
         for i, box in enumerate(boxes):
             ymin, xmin, ymax, xmax = box.tolist()
             probability = float(scores[i])
             class_id = classes[i]
             class_label = labels.get(class_id, 'N/A')
-            result.add_box(0, '', class_id, class_label, xmin, ymin, xmax, ymax, probability, '')
+            result.add_box(category_id=class_id, category_label=class_label, x1=xmin, y1=ymin, x2=xmax, y2=ymax, probability=probability)
 
         return flow_id, result
 

@@ -69,9 +69,9 @@ def build_classification_engine(model_file:str, labels_file:str, top_k:int = 5):
         raw_result = session.run([], {input_name:image_data})
         res = postprocess(raw_result)
         res_idx = np.squeeze(np.argsort(res))[-top_k:]
-        result = PyClassification(engine_id='onnx_runtime', stream_id=frame.stream_id, frame_id=frame.frame_id)
+        result = PyClassification(engine_id='onnx_runtime', frame_id=frame.frame_id)
         for idx in res_idx:
-            result.add_classification(idx, '', labels.get(idx, ''), float(res[idx]))
+            result.add_classification(category_id=idx, category_label= labels.get(idx, ''), probability=float(res[idx]))
 
 
         return flow_id, result

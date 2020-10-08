@@ -61,9 +61,9 @@ def build_classification_engine(model_file: str, labels_file: str, top_k=1):
 
         ordered = np.argpartition(-output, top_k)
 
-        result = PyClassification(stream_id=flow_id, frame_id=frame.frame_id)
-        for lable_id in ordered[:top_k]:
-            result.add_classification(lable_id, '', labels[lable_id], output[lable_id])
+        result = PyClassification(frame_id=frame.frame_id, engine_id='tflite')
+        for label_id in ordered[:top_k]:
+            result.add_classification(category_id=label_id, category_label=labels[label_id], probability=output[label_id])
 
         return flow_id, result
 
@@ -90,10 +90,10 @@ def build_detection_engine(model_file: str, labels_file: str):
         scores = get_output_tensor(interpreter, 2)
         count = int(get_output_tensor(interpreter, 3))
 
-        result = PyDetectionBox(frame_id=frame.frame_id, stream_id=flow_id)
+        result = PyDetectionBox(frame_id=frame.frame_id, engine_id='tflite')
         for i in range(count):
-            result.add_box(0, '', classes[i], labels.get(classes[i], ''), boxes[i][1], boxes[i][0], boxes[i][3],
-                           boxes[i][2], float(scores[i]), '')
+            result.add_box(category_id=classes[i],category_label=labels.get(classes[i], ''),
+                x1=boxes[i][1], y1=boxes[i][0], x2=boxes[i][3], y2=boxes[i][2], probability=float(scores[i]))
 
         return flow_id, result
 

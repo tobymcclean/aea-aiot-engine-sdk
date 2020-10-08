@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Classification",
+    "context": "com.adlinktech.vision.inference",
+    "qosProfile": "telemetry",
+    "version": "2.000",
+    "description": "Inference engine results for classification model",
+    "tags": [
+      {
+        "name": "engine_id",
+        "description": "Inference engine identifier",
+        "kind": "STRING",
+        "unit": "UUID"
+      },
+      {
+        "name": "frame_id",
+        "description": "ID of the input video frame fed to the inference engine",
+        "kind": "UINT32",
+        "unit": "NUM"
+      },
+      {
+        "name": "model_id",
+        "description": "UUID referencing ClassificationData to a project",
+        "kind": "STRING",
+        "unit": "UUID"
+      },
+      {
+        "name": "classification_data",
+        "description": "List of Classification Data (the results)",
+        "kind": "MULTI_DIM_NVP",
+        "dimensions": 1,
+        "optional": true,
+        "unit": "n/a",
+        "typedefinition": "ClassificationData"
+      }
+    ]
+  },
+  {
+    "typedefinition": "ClassificationData",
+    "tags": [
+      {
+        "name": "category_id",
+        "description": "Classification category/class ID",
+        "kind": "INT64",
+        "unit": "n/a"
+      },
+      {
+        "name": "category_label",
+        "description": "Human interpreted category name",
+        "kind": "STRING",
+        "unit": "n/a"
+      },
+      {
+        "name": "super_category_id",
+        "description": "Super Category ID containing the category",
+        "kind": "INT64",
+        "unit": "n/a"
+      },
+      {
+        "name": "super_category_label",
+        "description": "Human interpreted super category name",
+        "kind": "STRING",
+        "unit": "n/a"
+      },
+      {
+        "name": "metadata",
+        "description": "Generic buffer for model-specific metadata",
+        "kind": "STRING",
+        "optional": true,
+        "unit": "n/a"
+      },
+      {
+        "name": "probability",
+        "description": "Network confidence",
+        "kind": "FLOAT64",
+        "unit": "Percentage"
+      }
+    ]
+  }
+]

@@ -6,13 +6,13 @@
     "inputs": [
         {
             "name": "VideoFrameData",
-            "tagGroupId": "VideoFrame:com.vision.data:v1.0"
+            "tagGroupId": "VideoFrame:com.adlinktech.vision.capture:2.000"
         }
     ],
     "outputs": [
         {
             "name": "ClassificationData",
-            "tagGroupId": "Classification:com.vision.data:v1.0"
+            "tagGroupId": "Classification:com.adlinktech.vision.inference:2.000"
         }
     ]
 }

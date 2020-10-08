@@ -1,20 +1,14 @@
 [
     {
         "name":"DetectionPoint",
-        "context":"com.vision.data",
-        "qosProfile":"event",
-        "version":"v1.0",
-        "description":"Inference engine results for object detection model outputing points",
+        "context":"com.adlinktech.vision.inference",
+        "qosProfile":"telemetry",
+        "version":"2.000",
+        "description":"Inference engine results for object detection model outputing points. The stream_id is supposed to be embedded in the flowId.",
         "tags":[
             {
                 "name":"engine_id",
                 "description":"Inference engine identifier",
-                "kind":"STRING",
-                "unit":"UUID"
-            },
-            {
-                "name":"stream_id",
-                "description":"ID of the stream fed into the inference engine",
                 "kind":"STRING",
                 "unit":"UUID"
             },
@@ -25,9 +19,17 @@
                 "unit":"NUM"
             },
             {
-                "name":"data",
+                "name":"model_id",
+                "description":" uuid referencing DetectionPointData to a project",
+                "kind":"STRING",
+                "unit":"UUID"
+            },
+            {
+                "name":"detection_point_data",
                 "description":"List of Detection Point Data (the results)",
-                "kind":"NVP_SEQ",
+                "kind":"MULTI_DIM_NVP",
+		"dimensions":1,
+		"optional":true,
                 "unit":"n/a",
                 "typedefinition": "DetectionPointData"
             }
@@ -37,57 +39,59 @@
         "typedefinition": "DetectionPointData",
         "tags": [
             {
-                "name":"obj_id",
+                "name":"tracker_obj_id",
                 "description":"Detected object id",
-                "kind":"INT32",
+                "kind":"INT64",
                 "unit":"UUID"
             },
             {
-                "name":"obj_label",
-                "description":"Detected object proper name",
+                "name":"category_id",
+                "description":"Detected object point cateogry/class ID",
+                "kind":"INT64",
+                "unit":"n/a"
+            },
+            {
+                "name":"category_label",
+                "description":"Human interpreted category name of the detected point of interest",
                 "kind":"STRING",
-                "unit":"UUID"
-            },
-            {
-                "name":"class_id",
-                "description":"Detected object's classification type as raw id",
-                "kind":"INT32",
-                "unit":"UUID"
-            },
-            {
-                "name":"class_label",
-                "description":"Detected object's classification as proper name",
-                "kind":"STRING",
-                "unit":"UUID"
+                "unit":"n/a"
             },
             {
                 "name":"x",
                 "description":"Center X Coordinate (% from 0,0)",
-                "kind":"FLOAT32",
+                "kind":"FLOAT64",
                 "unit":"Percentage"
             },
             {
                 "name":"y",
                 "description":"Center Y Coordinate (% from 0,0)",
-                "kind":"FLOAT32",
+                "kind":"FLOAT64",
                 "unit":"Percentage"
             },
             {
                 "name":"radius",
                 "description":"Size of the point (% of image width)",
-                "kind":"FLOAT32",
+                "kind":"FLOAT64",
                 "unit":"Percentage"
             },
             {
                 "name":"probability",
                 "description":"Network confidence",
-                "kind":"FLOAT32",
+                "kind":"FLOAT64",
                 "unit":"Percentage"
             },
             {
-                "name":"meta",
+                "name":"color",
+                "description":"Detection box color",
+                "kind":"STRING",
+                "optional":true,
+                "unit":"Hex Code #RRGGBB"
+            },
+            {
+                "name":"metadata",
                 "description":"Buffer for extra inference metadata",
                 "kind":"STRING",
+                "optional":true,
                 "unit":"N/A"
             }
         ]
