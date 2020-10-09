@@ -2,9 +2,7 @@ import argparse
 import json
 import logging as log
 import sys
-from concurrent.futures.thread import ThreadPoolExecutor
 from pathlib import Path
-from time import sleep
 from typing import Tuple
 
 from vcap import NodeDescription, DetectionNode
@@ -15,24 +13,6 @@ from aea_aicv_sdk import FrameClassifier, frame_data_2_np_array
 
 log.basicConfig(format='[ %(levelname)s ] %(message)s', level=log.INFO, stream=sys.stdout)
 
-
-class CapsuleThreadPool(ThreadPoolExecutor):
-
-    def __init__(self, num_workers: int):
-        super().__init__(max_workers=num_workers)
-
-        self.num_workers = num_workers
-
-        self._warm_workers()
-
-    def _warm_workers(self):
-        """Initialize the worker pool before starting the test"""
-
-        def waste_time(_):
-            sleep(0.25)
-
-        for _ in self.map(waste_time, range(self.num_workers)):
-            pass
 
 
 def argument_parser():
