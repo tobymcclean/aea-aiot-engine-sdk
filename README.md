@@ -14,7 +14,7 @@ With the `aea_aicv_sdk.ObjectDetector` class the integration is as easy as provi
 ```python
 def inference(flow_id: str, frame: object) -> Tuple[str, PyDetectionBox]:
 ```
-The `flow_id` parameter identifies the source context of the frame and allows for the application to process more that one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyDetectionBox objects will be made available to other ADLINK Edge applications through the `DetectionBox` tag group (think database table).
+The `flow_id` parameter identifies the source context of the frame and allows for the application to process more than one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyDetectionBox objects will be made available to other ADLINK Edge applications through the `DetectionBox` tag group (think database table).
 
 | Engine | Reference integration | Inference funtion |
 | ------ | --------------------- | ----------------- |
@@ -34,7 +34,7 @@ With the `aea_aicv_sdk.FrameClassifier` class the integration is as easy as prov
 ```python
 def inference(flow_id: str, frame: object) -> Tuple[str, PyClassification]:
 ```
-The `flow_id` parameter identifies the source context of the frame and allows for the application to process more that one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyClassification objects will be made available to other ADLINK Edge applications through the `Classification` tag group (think database table).
+The `flow_id` parameter identifies the source context of the frame and allows for the application to process more than one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyClassification objects will be made available to other ADLINK Edge applications through the `Classification` tag group (think database table).
 
 | Engine | Reference integration | Inference funtion |
 | ------ | --------------------- | ----------------- |
