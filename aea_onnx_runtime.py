@@ -2,6 +2,7 @@ import json
 import logging as log
 import sys
 import argparse
+from typing import Tuple
 
 import numpy as np
 import onnxruntime
@@ -62,7 +63,7 @@ def build_classification_engine(model_file:str, labels_file:str, top_k:int = 5):
     log.info(f'Model input type: {input_type}')
 
 
-    def score(flow_id:str, frame:object) -> PyClassification:
+    def score(flow_id:str, frame:object) -> Tuple[str,PyClassification]:
         image = frame_data_2_image(frame, input_width, input_height)
         image_data = np.array(image).transpose(2, 0, 1)
         image_data = preprocess(image_data)
