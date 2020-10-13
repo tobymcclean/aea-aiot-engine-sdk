@@ -23,6 +23,7 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | [Darknet](https://github.com/AlexeyAB/darknet) | aea_darknet.py | build_detection_engine |
 | [OpenCV Vision Capsules](https://github.com/opencv/open_vision_capsules) | aea_vision_capsules.py | build_engine |
 | [OpenCV Haar-cascade Detection](https://docs.opencv.org/4.4.0/db/d28/tutorial_cascade_classifier.html) | aea_opencv_haar_cascade.py | build_engine |
+| [Torch Vision](https://pytorch.org/docs/stable/torchvision/index.html) | aea_torchvision.py | build_detection_engine |
 | [NVIDIA Tensor RT](https://developer.nvidia.com/tensorrt)| work in progress | |
 | [Intel OpenVINO](https://software.intel.com/en-us/openvino-toolkit) | work in progress | |
 | [ArmNN](https://github.com/ARM-software/armnn) | work in progress | |
@@ -41,6 +42,7 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_classification_engine|
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) | aea_onnx_runtime.py | build_classification_engine |
+| [Torch Vision](https://pytorch.org/docs/stable/torchvision/index.html) | aea_torchvision.py | build_classification_engine |
 
 ## Dependencies
 | Software | Version |
