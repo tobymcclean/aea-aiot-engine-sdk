@@ -9,7 +9,7 @@ from vcap import NodeDescription, DetectionNode
 from vcap.loading.capsule_loading import load_capsule
 
 from adl_edge_iot.datacls import PyDetectionBox
-from aea_aicv_sdk import FrameClassifier, frame_data_2_np_array
+from aea_aicv_sdk import frame_data_2_np_array, ObjectDetector
 
 log.basicConfig(format='[ %(levelname)s ] %(message)s', level=log.INFO, stream=sys.stdout)
 
@@ -63,7 +63,7 @@ def main():
         properties_str = json.load(f)
         properties_str = json.dumps(properties_str) if properties_str is not None else None
 
-    engine = FrameClassifier(properties_str=properties_str,
+    engine = ObjectDetector(properties_str=properties_str,
                              inference=build_engine(args['capsule']))
 
     engine.run()
