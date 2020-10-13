@@ -25,13 +25,14 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | [OpenCV Haar-cascade Detection](https://docs.opencv.org/4.4.0/db/d28/tutorial_cascade_classifier.html) | aea_opencv_haar_cascade.py | build_engine |
 | [Torch Vision](https://pytorch.org/docs/stable/torchvision/index.html) | aea_torchvision.py | build_detection_engine |
 | [NVIDIA Tensor RT](https://developer.nvidia.com/tensorrt)| work in progress | |
-| [Intel OpenVINO](https://software.intel.com/en-us/openvino-toolkit) | work in progress | |
+| [OpenVINO - dlstreamer](https://github.com/openvinotoolkit/dlstreamer_gst) | aea_ov_dls.py | build_engine* |
 | [ArmNN](https://github.com/ARM-software/armnn) | work in progress | |
 | [Rockchip NPU]() | work in progress | |
 | [Qualcomm Neural Processing SDK](https://developer.qualcomm.com/software/qualcomm-neural-processing-sdk) | work in progress | |
 
+The OpenVINO - dlstreamer inference is different because it is based on Gstreamer which asychronously handles the inferencing pipeline so this function is responsible for decoding the resulting buffers.
 
-#### Building a new frame classifierer integration
+#### Building a new frame classifier integration
 With the `aea_aicv_sdk.FrameClassifier` class the integration is as easy as providing a function that processes a frame/image and produces a `PyClassification` object that contains the top-K classifications for the frame along with their confidence levels. An example of the function signature
 ```python
 def inference(flow_id: str, frame: object) -> Tuple[str, PyClassification]:
