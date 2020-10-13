@@ -21,7 +21,8 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 |Tensorflow Lite | aea_tflite.py | build_detection_engine |
 | [Tensorflow 2 Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) | aea_tf_object_detection_api.py | build_detection_engine |
 | [Darknet](https://github.com/AlexeyAB/darknet) | aea_darknet.py | build_detection_engine |
-| [OpenCV Vision Capsules](https://github.com/opencv/open_vision_capsules) | aea_vision_capsules.py | builde_engine |
+| [OpenCV Vision Capsules](https://github.com/opencv/open_vision_capsules) | aea_vision_capsules.py | build_engine |
+| [OpenCV Haar-cascade Detection](https://docs.opencv.org/4.4.0/db/d28/tutorial_cascade_classifier.html) | aea_opencv_haar_cascade.py | build_engine |
 | [NVIDIA Tensor RT](https://developer.nvidia.com/tensorrt)| work in progress | |
 | [Intel OpenVINO](https://software.intel.com/en-us/openvino-toolkit) | work in progress | |
 | [ArmNN](https://github.com/ARM-software/armnn) | work in progress | |
