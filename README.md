@@ -24,6 +24,7 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | [OpenCV Vision Capsules](https://github.com/opencv/open_vision_capsules) | aea_vision_capsules.py | build_engine |
 | [OpenCV Haar-cascade Detection](https://docs.opencv.org/4.4.0/db/d28/tutorial_cascade_classifier.html) | aea_opencv_haar_cascade.py | build_engine |
 | [Torch Vision](https://pytorch.org/docs/stable/torchvision/index.html) | aea_torchvision.py | build_detection_engine |
+| [Detectron2](https://ai.facebook.com/tools/detectron2) | aea_detectron2.py | build_engine |
 | [NVIDIA Tensor RT](https://developer.nvidia.com/tensorrt)| work in progress | |
 | [ArmNN](https://github.com/ARM-software/armnn) | work in progress | |
 | [Rockchip NPU]() | work in progress | |
