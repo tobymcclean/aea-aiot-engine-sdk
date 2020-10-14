@@ -16,7 +16,7 @@ def inference(flow_id: str, frame: object) -> Tuple[str, PyDetectionBox]:
 ```
 The `flow_id` parameter identifies the source context of the frame and allows for the application to process more than one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyDetectionBox objects will be made available to other ADLINK Edge applications through the `DetectionBox` tag group (think database table).
 
-| Engine | Reference integration | Inference funtion |
+| Engine | Reference integration | Inference function |
 | ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_detection_engine |
 | [Tensorflow 2 Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) | aea_tf_object_detection_api.py | build_detection_engine |
@@ -25,12 +25,9 @@ The `flow_id` parameter identifies the source context of the frame and allows fo
 | [OpenCV Haar-cascade Detection](https://docs.opencv.org/4.4.0/db/d28/tutorial_cascade_classifier.html) | aea_opencv_haar_cascade.py | build_engine |
 | [Torch Vision](https://pytorch.org/docs/stable/torchvision/index.html) | aea_torchvision.py | build_detection_engine |
 | [NVIDIA Tensor RT](https://developer.nvidia.com/tensorrt)| work in progress | |
-| [OpenVINO - dlstreamer](https://github.com/openvinotoolkit/dlstreamer_gst) | aea_ov_dls.py | build_engine* |
 | [ArmNN](https://github.com/ARM-software/armnn) | work in progress | |
 | [Rockchip NPU]() | work in progress | |
 | [Qualcomm Neural Processing SDK](https://developer.qualcomm.com/software/qualcomm-neural-processing-sdk) | work in progress | |
-
-The OpenVINO - dlstreamer inference is different because it is based on Gstreamer which asychronously handles the inferencing pipeline so this function is responsible for decoding the resulting buffers.
 
 #### Building a new frame classifier integration
 With the `aea_aicv_sdk.FrameClassifier` class the integration is as easy as providing a function that processes a frame/image and produces a `PyClassification` object that contains the top-K classifications for the frame along with their confidence levels. An example of the function signature
@@ -39,11 +36,27 @@ def inference(flow_id: str, frame: object) -> Tuple[str, PyClassification]:
 ```
 The `flow_id` parameter identifies the source context of the frame and allows for the application to process more than one source of data. And the `frame` parameter is an object with all of the attributes of the `DetectionBox` type found in _definitions/TagGroup/com.vision.data/VideoFrameTagGroup.json_ file. The resulting PyClassification objects will be made available to other ADLINK Edge applications through the `Classification` tag group (think database table).
 
-| Engine | Reference integration | Inference funtion |
+| Engine | Reference integration | Inference function |
 | ------ | --------------------- | ----------------- |
 |Tensorflow Lite | aea_tflite.py | build_classification_engine|
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) | aea_onnx_runtime.py | build_classification_engine |
 | [Torch Vision](https://pytorch.org/docs/stable/torchvision/index.html) | aea_torchvision.py | build_classification_engine |
+
+#### Building a Gstreamer integration
+Integrating a technology based on Gstreamer is different because it is asynchronous. You emit a frame into the pipeline and will get an event when a result is produced by the pipeline. In this case you can simply provide a function that handles the result.
+
+```python
+def handler(buffer : Gst.Buffer, caps : Gst.Caps):
+```
+
+The `buffer` parameter contains the resulting buffer ([Gst.Buffer](https://lazka.github.io/pgi-docs/#Gst-1.0/classes/Buffer.html)) produced by the pipeline, it will contain a frame plus any metadata added to the buffer. The `caps` parameter ([Gst.Caps](https://lazka.github.io/pgi-docs/#Gst-1.0/classes/Caps.html)) provides metadata specifically about the format of the frame contained within the buffer.
+
+The following is a list of reference integrations with frameworks that are based on Gstreamer.
+
+| Engine | Reference integration | Handler function |
+| ------ | --------------------- | ----------------- |
+| [OpenVINO - dlstreamer](https://github.com/openvinotoolkit/dlstreamer_gst) | aea_ov_dls.py | build_engine* |
+
 
 ## Dependencies
 | Software | Version |
