@@ -24,7 +24,7 @@ def argument_parser():
                         default=30)
     parser.add_argument('-p', '--properties', type=str, required=False,
                         help='The URI (without file://) to the properties file.',
-                        default='./config/FrameStreamer.json')
+                        default='etc/config/frame_streamer.json')
     return parser.parse_args()
 
 
@@ -41,6 +41,8 @@ def build_exit_handler(thing):
     def exit_handler(signum, frame):
         log.info('Exiting the frame streamer.')
         thing.__exit__()
+
+    return exit_handler
 
 def main() -> int:
     """

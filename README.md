@@ -58,6 +58,61 @@ The following is a list of reference integrations with frameworks that are based
 | ------ | --------------------- | ----------------- |
 | [OpenVINO - dlstreamer](https://github.com/openvinotoolkit/dlstreamer_gst) | aea_ov_dls.py | build_engine* |
 
+## Running the examples
+### Frame Streamer
+```bash
+$python aea_frame_streamer.py -i <path to video file> -p etc/config/frame_streamer.json
+```
+
+The frame streamer accepts the following command line parameters.
+
+| Long name | Short name | Type | Required | Default | Description |
+| --------- | ---------- | ---- | -------- | ------- | ----------- | 
+| video_file | i | str | True | | Mandatory file name of the video file to load and stream. |
+| fps | f | int | False | 30 | The framerate to read the video file. |
+| properties | p | str | False | etc/config/frame_streamer.json | The URI (without file://) to the properties file for the Thing |
+
+### Detectron2
+```bash
+$python aea_detectron2.py -m faster_rcnn_R_50_C4_1x
+```
+The example accepts the following command line parameters.
+
+| Long name | Short name | Type | Required | Default | Description |
+| --------- | ---------- | ---- | -------- | ------- | ----------- | 
+| model | m | str | True | | The name of the model |
+| properties | p | str | False | etc/config/properties.json | The URI (without file://) to the properties file for the Thing |
+
+The list of valid models is:
+- COCO Detection with Faster R-CNN
+    - faster_rcnn_R_50_C4_1x
+    - faster_rcnn_R_50_DC5_1x
+    - faster_rcnn_R_50_FPN_1x
+    - faster_rcnn_R_50_C4_3x
+    - faster_rcnn_R_50_FPN_3x
+    - faster_rcnn_R_101_C4_3x
+    - faster_rcnn_R_101_DC5_3x
+    - faster_rcnn_R_101_FPN_3x
+    - faster_rcnn_X_101_32x8d_FPN_3x
+- COCO Detection with RetinaNet
+    - retinanet_R_50_FPN_1x
+    - retinanet_R_50_FPN_3x
+    - retinanet_R_101_FPN_3x
+- COCO Detection with RPN and Fast R-CNN
+    - rpn_R_50_C4_1x
+    - rpn_R_50_FPN_1x
+    - fast_rcnn_R_50_FPN_1x
+- COCO Instance Segmentation Baselines with Mask R-CNN
+    - mask_rcnn_R_50_C4_1x
+    - mask_rcnn_R_50_DC5_1x
+    - mask_rcnn_R_50_FPN_1x
+    - mask_rcnn_R_50_C4_3x
+    - mask_rcnn_R_50_DC5_3x
+    - mask_rcnn_R_50_FPN_3x
+    - mask_rcnn_R_101_C4_3x
+    - mask_rcnn_R_101_DC5_3x
+    - mask_rcnn_R_101_FPN_3x
+    - mask_rcnn_X_101_32x8d_FPN_3x
 
 ## Dependencies
 | Software | Version |
