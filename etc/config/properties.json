@@ -1,0 +1,14 @@
+{
+    "id": "_AUTO_",
+    "classId": "ObjectDetector:com.adlinktech.vision:v1.0",
+    "contextId": "inference.demo1",
+    "description": "Demo of the different inference engines.",
+    "inputSettings" : [
+        {
+            "name": "VideoFrameData",
+            "filters" : {
+                "flowIdFilters": ["demoStream"]
+            }
+        }
+    ]
+}

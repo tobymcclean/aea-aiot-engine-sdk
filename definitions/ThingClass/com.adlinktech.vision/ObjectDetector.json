@@ -1,6 +1,6 @@
 {
     "name": "ObjectDetector",
-    "context": "com.vision.data",
+    "context": "com.adlinktech.vision",
     "version": "v1.0",
     "description": "A thing that derives object detection boxes from video frames",
     "inputs": [

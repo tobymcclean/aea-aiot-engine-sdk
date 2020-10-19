@@ -1,0 +1,12 @@
+{
+    "name": "FrameStreamer",
+    "context": "com.adlinktech.vision",
+    "version": "v1.0",
+    "description": "Video frames on the data river",
+    "outputs": [
+        {
+            "name": "VideoFrameData",
+            "tagGroupId": "VideoFrame:com.adlinktech.vision.capture:2.000"
+        }
+    ]
+}

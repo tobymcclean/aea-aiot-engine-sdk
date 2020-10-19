@@ -22,6 +22,8 @@ from detectron2.data import MetadataCatalog
 from adl_edge_iot.datacls import PyDetectionBox
 from aea_aicv_sdk import frame_data_2_np_array, ObjectDetector
 
+log.basicConfig(format='[ %(levelname)s ] %(message)s', level=log.DEBUG, stream=sys.stdout)
+
 detectron2_models = {
     # COCO Detection with Faster R-CNN
     "faster_rcnn_R_50_C4_1x": "COCO-Detection/faster_rcnn_R_50_C4_1x.yaml",
@@ -129,7 +131,7 @@ def argument_parser():
                         help='The name of the model')
     parser.add_argument('-p', '--properties', type=str, required=False,
                         help='The URI (without file://) to the properties file.',
-                        default='./config/Viewer.json')
+                        default='etc/config/properties.json')
 
     return parser.parse_args()
 

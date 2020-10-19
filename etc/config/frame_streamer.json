@@ -1,0 +1,6 @@
+{
+    "id": "_AUTO_",
+    "classId": "FrameStreamer:com.adlinktech.vision:v1.0",
+    "contextId": "demoStream",
+    "description": "Default Video frames on the data river Thing"
+}

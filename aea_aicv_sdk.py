@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 
 from rx.subject import Subject
+from rx import operators as ops
 
 from adlinktech.datariver import IotNvpDataAvailableListener, Dispatcher, FlowState
 from adlinktech.datariver import class_from_thing_input
@@ -48,7 +49,9 @@ class __InferenceEngine(EdgeThing):
         self.__frame_subject = Subject()
         self.__listener = FrameListener(self.__frame_subject, self.__frame_data_class)
         self.__inference_fn = inference
-        self.__frame_subject.map(lambda s: self.__inference_fn(s[0], s[1])).subscribe(self._write_inference)
+        self.__frame_subject.pipe(
+            ops.map(lambda s: self.__inference_fn(s[0], s[1]))
+        ).subscribe(self._write_inference)
 
     def _write_inference(self, obj: object) -> None:
         pass
@@ -82,6 +85,7 @@ class ObjectDetector(__InferenceEngine):
                          thing_cls=['com.adlinktech.vision/ObjectDetector'])
 
     def _write_inference(self, obj: Tuple[str, PyDetectionBox]) -> None:
+        log.info('Writing detection boxes.')
         write_tag(self.thing, 'DetectionBoxData', obj[1].dr_data, flow=obj[0])
 
 
@@ -115,12 +119,12 @@ def load_labels(path: str) -> Dict[int, str]:
     return labels
 
 def frame_data_2_np_array(frame:object):
-    frame_raw = np.frombuffer(bytes(frame.data), dtype=np.uint8)
+    frame_raw = np.frombuffer(bytes(frame.video_data), dtype=np.uint8)
     frame_raw.shape = (frame.height, frame.width, frame.channels)
     return frame_raw
 
 def frame_data_2_image(frame: object, input_width: int, input_height: int):
-    frame_raw = np.frombuffer(bytes(frame.data), dtype=np.uint8)
+    frame_raw = np.frombuffer(bytes(frame.video_data), dtype=np.uint8)
     frame_raw.shape = (frame.height, frame.width, frame.channels)
     return Image.fromarray(frame_raw, mode=frame.format).convert('RGB').resize((input_width, input_height),
                                                                                Image.ANTIALIAS)
