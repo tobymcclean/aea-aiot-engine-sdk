@@ -19,6 +19,13 @@ from adl_edge_iot.datacls.PyDetectionBox import PyDetectionBox
 from adl_edge_iot.datariver.utils import write_tag
 
 
+def _build_data_river_sink(thing : EdgeThing, output : str) -> Callable[[str, object], None]:
+        def sink(flow_id : str, data : object) -> None :
+            write_tag(thing, output, data.dr_data, flow=flow_id)
+
+        return sink
+
+
 class FrameListener(IotNvpDataAvailableListener):
     def __init__(self, subject, data_class):
         super().__init__()
@@ -53,8 +60,15 @@ class __InferenceEngine(EdgeThing):
             ops.map(lambda s: self.__inference_fn(s[0], s[1]))
         ).subscribe(self._write_inference)
 
-    def _write_inference(self, obj: object) -> None:
-        pass
+    @property
+    def sink(self) -> Callable[[str, object], None]:
+        def no_op(flow_id, data):
+            log.warning('No sink configured.')
+            pass
+        return no_op
+
+    def _write_inference(self, obj: Tuple[str, object]) -> None:
+        self.sink(obj[0], obj[1])
 
     def run(self) -> None:
         """
@@ -83,10 +97,12 @@ class ObjectDetector(__InferenceEngine):
                          inference=inference,
                          tag_groups=['com.adlinktech.vision.inference/2.000/DetectionBoxTagGroup', 'com.adlinktech.vision.capture/2.000/VideoFrameTagGroup'],
                          thing_cls=['com.adlinktech.vision/ObjectDetector'])
+        self._sink = _build_data_river_sink(self.thing, 'DetectionBoxData')
 
-    def _write_inference(self, obj: Tuple[str, PyDetectionBox]) -> None:
-        log.info('Writing detection boxes.')
-        write_tag(self.thing, 'DetectionBoxData', obj[1].dr_data, flow=obj[0])
+
+    @property
+    def sink(self):
+        return self._sink
 
 
 class FrameClassifier(__InferenceEngine):
@@ -97,9 +113,11 @@ class FrameClassifier(__InferenceEngine):
                          inference=inference,
                          tag_groups=['com.adlinktech.vision.inference/2.000/ClassificationBoxTagGroup', 'com.adlinktech.vision.capture/2.000/VideoFrameTagGroup'],
                          thing_cls=['com.adlinktech.vision/FrameClassifier'])
+        self._sink = _build_data_river_sink(self.thing, 'ClassificationData')
 
-    def _write_inference(self, obj: Tuple[str, PyClassification]) -> None:
-        write_tag(self.thing, 'ClassificationData', obj[1].dr_data, flow=obj[0])
+    @property
+    def sink(self):
+        return self._sink
 
 
 def load_labels(path: str) -> Dict[int, str]:
